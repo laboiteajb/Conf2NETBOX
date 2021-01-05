@@ -8,3 +8,11 @@ Executer Conf2Netbox.py pour lancer le script
 server = https://netbox.societe.com  
 token = votre_token  
 cert = votre_certificat.pem (à la racine du projet)  
+
+### Automatisation  
+[IMPORT]  
+region = nom_de_la_region  
+site = nom_du_site  
+device = nom_du_device  
+device_type = alcatel(en cours de dev)  
+path = path_du_fichier_de_config(boot.cfg pour alcatel)  
