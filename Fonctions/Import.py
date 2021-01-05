@@ -8,6 +8,10 @@ import sys
 def create_vlan(Imp_TabVlanName, NB_list_vlans_site_name, Imp_TabVlanID, site, NB_vlan_group, netbox):
     print('')
     spinner = Spinner('Recuperation des VLAN non present du site dans NETBOX et creation des VLAN non present ')
+
+    # Récuperation du group de tenant et du tenant du site
+    tenant = site.tenant.id
+    group_tenant = site.tenant.group.id
     # Dans la liste des vlan du fichier de config
     for element2 in range(0, len(Imp_TabVlanName)):
         spinner.next()
@@ -17,7 +21,7 @@ def create_vlan(Imp_TabVlanName, NB_list_vlans_site_name, Imp_TabVlanID, site, N
             response = netbox.nb.ipam.vlans.create(
                 name = Imp_TabVlanName[element2],
                 vid = Imp_TabVlanID[element2],
-                tenant = 1,
+                tenant = tenant,
                 site = site.id,
                 group = NB_vlan_group.id
             )
@@ -72,7 +76,7 @@ def import_untag(Imp_TabVlanIDUntag, NB_list_interfaces, Imp_TabVlanPortUntag, N
     for element7 in range(0, len(NB_list_interfaces)):
         spinner.next()
         interface_tmp = NB_list_interfaces[element7]
-        interface_tmp.update({"untagged_vlan": vlan1})
+        interface_tmp.update({"untagged_vlan": vlan1.id})
         print('  Enregistrement du port', NB_list_interfaces[element7], 'avec le VLAN Untag :', vlan1)
 
     # Application des VLAN untag
@@ -87,7 +91,7 @@ def import_untag(Imp_TabVlanIDUntag, NB_list_interfaces, Imp_TabVlanPortUntag, N
             if str(NB_list_interfaces[element5]) == str(NB_TabVlanPortUntag[element6]):
                 interface_tmp = NB_TabVlanPortUntag[element6]
                 VLAN_tmp = NB_TabVlanUntag[element6]
-                interface_tmp.update({"untagged_vlan": VLAN_tmp})
+                interface_tmp.update({"untagged_vlan": VLAN_tmp.id})
                 print('  Enregistrement du port', NB_list_interfaces[element5], 'avec le VLAN Untag :', VLAN_tmp)
         
     del element
