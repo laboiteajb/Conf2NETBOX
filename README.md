@@ -10,6 +10,10 @@ token = votre_token
 cert = votre_certificat.pem (à la racine du projet)  
 
 ### Automatisation  
+[GENERAL]
+...
+noquest = True
+
 [IMPORT]  
 region = nom_de_la_region  
 site = nom_du_site  
