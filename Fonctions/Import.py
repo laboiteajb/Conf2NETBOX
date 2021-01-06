@@ -131,14 +131,14 @@ def import_tag(Imp_TabVlanPorttag, Imp_TabVlanIDtag, NB_list_interfaces, NB_TabV
                 
                 # Si element_precedent == '' alors premier element de la liste
                 if element_precedent == '':
-                    id = "NB_TabVlanIDtag[" + str(Imp_TabVlanIDtag[element]) + "]"
+                    id = "NB_TabVlanIDtag[" + str(element) + "]"
                     code = "interface.update({'tagged_vlans': [" + id
                     element_precedent = Imp_TabVlanPorttag[element]
                     interface_tmp.append(interface)
                     
                 # Si element_precedent == Imp_TabVlanPorttag[element] un autre VLAN et detecter sur la meme interface, ajout du VLAN    
                 elif element_precedent == Imp_TabVlanPorttag[element]:
-                    id = ", NB_TabVlanIDtag[" + str(Imp_TabVlanIDtag[element]) + "]"
+                    id = ", NB_TabVlanIDtag[" + str(element) + "]"
                     code = code + id
                     element_precedent = Imp_TabVlanPorttag[element]
 
@@ -149,7 +149,7 @@ def import_tag(Imp_TabVlanPorttag, Imp_TabVlanIDtag, NB_list_interfaces, NB_TabV
                     code_tmp.append(code)
 
 
-                    id = "NB_TabVlanIDtag[" + str(Imp_TabVlanIDtag[element]) + "]"
+                    id = "NB_TabVlanIDtag[" + str(element) + "]"
                     code = "interface.update({'tagged_vlans': [" + id
                     element_precedent = Imp_TabVlanPorttag[element]
                     
@@ -167,6 +167,7 @@ def import_tag(Imp_TabVlanPorttag, Imp_TabVlanIDtag, NB_list_interfaces, NB_TabV
     for element2 in range(0, len(interface_tmp)):
         interface = interface_tmp[element2]
         exec(code_tmp[element2])
+        print('interface:', interface, 'vlan:', code_tmp[element2])
 # ---------------------------------------------------------------------------- #
 
 # exemple
